@@ -14,6 +14,8 @@ class Matrix {
         }
     }
 
+    // Funções Diversas
+
     static arrayToMatrix(arr) {
         let matrix = new Matrix(arr.length, 1);
         matrix.map((elm, i, j) => {
@@ -21,6 +23,15 @@ class Matrix {
         })
         return matrix;
     }
+
+    static MatrixToArray(obj) {
+        let arr = []
+        obj.map((elm, i, j) => {
+            arr.push(elm);
+        })
+        return arr;
+    }
+
 
     print() {
         console.table(this.data);
@@ -33,9 +44,9 @@ class Matrix {
     }
 
     static map(A, func) {
-        let matrix = new Matrix(A.rows, B.cols);
+        let matrix = new Matrix(A.rows, A.cols);
 
-        matrix.data = matrix.data.map((arr, i) => {
+        matrix.data = A.data.map((arr, i) => {
             return arr.map((num, j) => {
                 return func(num, i, j);
             })
@@ -55,11 +66,53 @@ class Matrix {
         return this;
     }
 
+    static transpose(A){
+        var matrix = new Matrix(A.cols, A.rows);
+        matrix.map((num,i,j) => {
+            return A.data[j][i];
+        });
+        return matrix;
+    }
+
+    // Operações Estáticas Matriz x Escalar 
+    
+    static escalar_multiply(A, escalar) {
+        var matrix = new Matrix(A.rows, A.cols);
+
+        matrix.map((num, i, j) => {
+            return A.data[i][j] * escalar;
+        });
+
+        return matrix;
+    }
+    
+    // Operações Estáticas Matriz x Matriz
+
+    static hadamard(A, B) {
+        var matrix = new Matrix(A.rows, A.cols);
+
+        matrix.map((num, i, j) => {
+            return A.data[i][j] * B.data[i][j]
+        });
+
+        return matrix;
+    }
+
     static add(A, B) {
         var matrix = new Matrix(A.rows, A.cols);
 
         matrix.map((num, i, j) => {
             return A.data[i][j] + B.data[i][j]
+        });
+
+        return matrix;
+    }
+
+    static subtract(A, B) {
+        var matrix = new Matrix(A.rows, A.cols);
+
+        matrix.map((num, i, j) => {
+            return A.data[i][j] - B.data[i][j]
         });
 
         return matrix;
